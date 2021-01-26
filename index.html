@@ -1,0 +1,133 @@
+<html>
+	<head>
+		<title>Linked List</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="./bootstrap.min.css">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="col-11 col-md-10 mx-auto rounded bg-white text-center p-3">
+			<h1 class="text-primary">Add and Remove element from the list</h1>
+			<div class="col-10 col-md-4 mx-auto my-3">
+				<input class="form-control border border-dark" type="text" id="inp">
+			</div>
+			<div class="mx-auto my-3">
+				<button class="btn btn-success mx-2" type="button" onclick="add_num()">ADD</button>
+				<button class="btn btn-danger mx-2" type="button" onclick="remove_num()">Remove</button>
+			</div>
+			<ul id="list" class="list-unstyled row no-gutters col-10 col-md-6 mx-auto"></ul>
+		</div>
+		<script>
+		class Node {
+			constructor(element) 
+			{ 
+				this.element = element; 
+				this.next = null;
+			} 
+		}
+		
+		class LinkedList 
+		{ 
+			constructor() 
+			{ 
+				this.head = null; 
+				this.size = 0; 
+			}  
+			
+			add(element) 
+			{
+				var node = new Node(element); 
+			  
+				var current; 
+			
+				if (this.head == null) 
+					this.head = node; 
+				else 
+				{ 
+					current = this.head;
+					while (current.next) 
+					{ 
+						current = current.next; 
+					} 
+			   
+					current.next = node; 
+				} 
+				this.size++; 
+			}
+
+			printList() 
+			{ 
+				var curr = this.head; 
+				document.querySelector("#list").innerHTML = '';
+				while (curr) 
+				{ 
+					console.log(this.size, curr.element)
+					document.querySelector("#list").innerHTML += `<li><p>${curr.element}</p></li>`
+					curr = curr.next;
+				} 
+			}
+
+			removeElement(element) 
+			{ 
+				var current = this.head; 
+				var prev = null; 
+				while (current != null) 
+				{
+					if (current.element === element) 
+					{ 
+						if (prev == null) 
+						{ 
+							this.head = current.next; 
+						}
+						 else 
+						{ 
+							prev.next = current.next; 
+						} 
+						this.size--; 
+						return current.element; 
+					} 
+					prev = current; 
+					current = current.next; 
+				} 
+				return -1; 
+			}
+		} 
+		
+		let lis = null;
+		
+		
+		function add_num()
+		{
+			let val=document.querySelector("#inp").value	;
+			if (val != "" && val != undefined && val != null) 
+			{
+				if(lis==null) 
+				{
+					lis = new LinkedList();
+					lis.add(val);
+				}
+				else 
+				{
+					lis.add(val);
+				}
+				document.querySelector("#inp").value = ""
+				lis.printList();
+			}
+		}
+		
+		function remove_num() 
+		{
+			let val=document.querySelector("#inp").value;
+			if(lis !== null) 
+			{
+				lis.removeElement(val);
+			}
+			document.querySelector("#inp").value = ""
+			lis.printList();
+		}
+		
+		
+		</script>
+	</body>
+</html>
